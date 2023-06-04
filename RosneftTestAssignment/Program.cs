@@ -84,6 +84,7 @@ app.MapGet("/design_object", () =>
             response.Add(new DesignObjectResponse(
                 id: designObject.Id,
                 code: designObject.Code,
+                full_code: designObject.FullCode,
                 name: designObject.Name,
                 project_id: designObject?.Project?.Id ?? null,
                 design_object_id: designObject?.DesignObjectParent?.Id ?? null,
@@ -102,6 +103,7 @@ app.MapGet("/design_object/{id}", ([FromRoute] int id) =>
         var response = new DesignObjectResponse(
                 id: designObject.Id,
                 code: designObject.Code,
+                full_code: designObject.FullCode,
                 name: designObject.Name,
                 project_id: designObject?.Project?.Id ?? null,
                 design_object_id: designObject?.DesignObjectParent?.Id ?? null,
@@ -124,6 +126,8 @@ app.MapGet("/documentation_set", () =>
                 id: documents.Id,
                 mark_id: documents.Mark.Id,
                 number: documents.Number,
+                full_number: documents.FullName,
+                full_cipher: documents.FullCipher,
                 design_object_id: documents.DesignObject.Id
                 ));
         }
@@ -140,6 +144,8 @@ app.MapGet("/documentation_set/{id}", ([FromRoute] int id) =>
                 id: documents.Id,
                 mark_id: documents.Mark.Id,
                 number: documents.Number,
+                full_number: documents.FullName,
+                full_cipher: documents.FullCipher,
                 design_object_id: documents.DesignObject.Id
                 );
         return Results.Ok(response);
@@ -174,7 +180,13 @@ app.MapGet("/mark/{id}", ([FromRoute] int id) =>
 
 app.Run();
 
+/*
+Код объекта проектирования (полный код объекта формируется как "Полный код родительского объекта.Собственный код")
+Номер (нумеруются комплекты с нуля). Марка + Номер = уникальный ключ комплекта внутри объекта проектирования
+Полный шифр комплекта (формируется как "Шифр проекта-Полный код объекта-МаркаНомер")
+*/
+
 internal record ProjectResponse(int id, string cipher, string name, int[] design_objects_id) { }
-internal record DesignObjectResponse(int id, string code, string name, int? project_id, int? design_object_id, int[] design_objects_id) { }
-internal record DocumentationSetResponse(int id, int mark_id, int number, int design_object_id) { }
+internal record DesignObjectResponse(int id, string code, string full_code, string name, int? project_id, int? design_object_id, int[] design_objects_id) { }
+internal record DocumentationSetResponse(int id, int mark_id, int number, string full_number, string full_cipher, int design_object_id) { }
 internal record MarkResponse(int id, string name, string full_name) { }

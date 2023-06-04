@@ -9,6 +9,8 @@
         public DesignObject? DesignObjectParent { get; set; }
         public List<DesignObject> DesignObjectChildren { get; set; }
 
+        public string FullCode => $"{(Project is not null ? Project.Cipher : DesignObjectParent is not null ? DesignObjectParent.Code : "")}.{Code}";
+
         public DesignObject(int id, string code, string name, Project? project, DesignObject? designObjectParent, List<DesignObject> designObjectChildren)
         {
             Id = id;
