@@ -90,6 +90,7 @@ namespace RosneftTestAssignment
 
                 var designObject = new DesignObject(id, code, name, projects[projectId]);
                 if (designObjectId is not null) { designObjectParentLinks[designObject.Id] = designObjectId.Value; }
+                else { designObject.Project.DesignObjects.Add(designObject); }
                 if (designObjects.ContainsKey(id)) { designObjects[id] = designObject; }
                 else { designObjects.Add(id, designObject); }
             }

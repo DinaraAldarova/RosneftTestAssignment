@@ -7,8 +7,8 @@ namespace RosneftTestAssignment.Models
         public int Id { get; set; }
         public Mark Mark { get; set; }
         public int Number { get; set; }
-        public string FullName => $"{Mark.Name}{Number}";
-        public string FullCipher => $"{DesignObject.FullCode}-{FullName}";
+        public string FullNumber => $"{Mark.Name}{Number}";
+        public string FullCipher => $"{DesignObject.FullCode}-{FullNumber}";
         public DesignObject DesignObject { get; set; }
 
         public DocumentationSet(int id, Mark mark, int number, DesignObject? designObject = null)
