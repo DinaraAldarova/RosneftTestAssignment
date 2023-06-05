@@ -1,4 +1,5 @@
 using Microsoft.AspNetCore.Mvc;
+using Microsoft.Extensions.Configuration;
 using Microsoft.Data.Sqlite;
 using RosneftTestAssignment;
 using RosneftTestAssignment.Models;
@@ -21,7 +22,7 @@ if (app.Environment.IsDevelopment())
 }
 app.UseHttpsRedirection();
 
-Storage storage = Storage.getInstance();
+Storage storage = Storage.getInstance(app.Configuration.GetConnectionString("TestDatabase"));
 storage.UpdateData();
 
 /*Тестовое в Роснефть:

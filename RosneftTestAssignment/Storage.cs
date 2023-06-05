@@ -6,9 +6,13 @@ namespace RosneftTestAssignment
 {
     public class Storage
     {
-        private static Storage instanse = new Storage("Data Source=../Db/identifier.sqlite;Mode=ReadOnly;Foreign Keys=True");
-        public static Storage getInstance()
+        private static Storage? instanse;
+        public static Storage getInstance(string connectionString)
         {
+            if (instanse is null)
+            {
+                instanse = new Storage(connectionString);
+            }
             return instanse;
         }
 
