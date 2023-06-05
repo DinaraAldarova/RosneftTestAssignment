@@ -85,10 +85,10 @@ namespace RosneftTestAssignment
                 int id = reader.GetInt32(reader.GetOrdinal("id"));
                 string code = reader.GetString(reader.GetOrdinal("code"));
                 string name = reader.GetString(reader.GetOrdinal("name"));
-                int? projectId = reader.IsDBNull(reader.GetOrdinal("project_id")) ? null : reader.GetInt32(reader.GetOrdinal("project_id"));
+                int projectId = reader.GetInt32(reader.GetOrdinal("project_id"));
                 int? designObjectId = reader.IsDBNull(reader.GetOrdinal("design_object_id")) ? null : reader.GetInt32(reader.GetOrdinal("design_object_id"));
 
-                var designObject = new DesignObject(id, code, name, projectId is null ? null : projects[projectId.Value]);
+                var designObject = new DesignObject(id, code, name, projects[projectId]);
                 if (designObjectId is not null) { designObjectParentLinks[designObject.Id] = designObjectId.Value; }
                 if (designObjects.ContainsKey(id)) { designObjects[id] = designObject; }
                 else { designObjects.Add(id, designObject); }

@@ -87,7 +87,7 @@ app.MapGet("/design_object", () =>
                 code: designObject.Code,
                 full_code: designObject.FullCode,
                 name: designObject.Name,
-                project_id: designObject?.Project?.Id ?? null,
+                project_id: designObject.Project.Id,
                 design_object_id: designObject?.DesignObjectParent?.Id ?? null,
                 design_objects_id: designObject.DesignObjectChildren.Select(child => child.Id).ToArray()
                 ));
@@ -106,7 +106,7 @@ app.MapGet("/design_object/{id}", ([FromRoute] int id) =>
                 code: designObject.Code,
                 full_code: designObject.FullCode,
                 name: designObject.Name,
-                project_id: designObject?.Project?.Id ?? null,
+                project_id: designObject.Project.Id,
                 design_object_id: designObject?.DesignObjectParent?.Id ?? null,
                 design_objects_id: designObject.DesignObjectChildren.Select(child => child.Id).ToArray()
                 );
@@ -188,6 +188,6 @@ app.Run();
 */
 
 internal record ProjectResponse(int id, string cipher, string name, int[] design_objects_id) { }
-internal record DesignObjectResponse(int id, string code, string full_code, string name, int? project_id, int? design_object_id, int[] design_objects_id) { }
+internal record DesignObjectResponse(int id, string code, string full_code, string name, int project_id, int? design_object_id, int[] design_objects_id) { }
 internal record DocumentationSetResponse(int id, int mark_id, int number, string full_number, string full_cipher, int design_object_id) { }
 internal record MarkResponse(int id, string name, string full_name) { }
